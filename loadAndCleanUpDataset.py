@@ -21,9 +21,16 @@ def turnDatasetIntoTorchTensor(df):
     #Personality
     df.loc[df['Personality'] == 'Introvert', 'Personality'] = 0
     df.loc[df['Personality'] == 'Extrovert', 'Personality'] = 1
-
+    
+    df = normalizeData(df)
     processedData = np.astype(df.values, float)
     return torch.Tensor(processedData)
+
+#Do 0-1 normalization rather than normalize the columns since some of the columns are binary
+def normalizeData(df):
+    for key in df.keys():
+        df.loc[:, key] = (df[key] - np.min(df[key])) / (np.max(df[key]) - np.min(df[key]))
+    return df
 
 def main(args = None):
     parser = argparse.ArgumentParser(description='Simple function to remove the rows with nan from csv and place the reqult into a dataframe.')
