@@ -23,7 +23,7 @@ def train(dataset, randState = 42, test_size = 0.3):
 
     #Train Test Split. Can be manually set for repeatability and easier result analysis / debugging
     X_train, _, y_train, _ = train_test_split(personalityFeatures, personalityType, test_size=test_size, random_state=randState)
-    del personalityFeatures, personalityType
+    del personalityFeatures, personalityType, _
 
     #Put the dataset into the torch dataset for use in a dataloader
     trainDataset = extroIntroDataset(X_train, y_train)
@@ -41,7 +41,7 @@ def main(args = None):
     parser = argparse.ArgumentParser(description = "Training loop for the kaggle dataset: https://www.kaggle.com/datasets/rakeshkapilavai/extrovert-vs-introvert-behavior-data")
     parser.add_argument('--dataset', type = str, default = "personality_dataset.csv") 
     args = parser.parse_args()
-    train(dataset = "personality_dataset.csv")
+    train(dataset = args.dataset)
     return
 
 if __name__ == "__main__":
