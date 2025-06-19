@@ -26,9 +26,9 @@ class simpleMLP(nn.Module):
         self.relu2 = nn.ReLU(inplace = True)
         self.batchnorm2 = nn.BatchNorm1d(32)
 
-        self.linearFinal = nn.Linear(32, 2)
+        self.linearFinal = nn.Linear(32, 1)
         #Layer for probabilty
-        self.softmaxFinal = nn.Softmax(dim=1)
+        self.softmaxFinal = nn.Softmax(dim=0)
 
     def forward(self, inputFeatures):
 
@@ -42,7 +42,7 @@ class simpleMLP(nn.Module):
         x = self.batchnorm2(x)
 
         x = self.linearFinal(x)
-        yPred = self.softmaxFinal(x)
+        yPred = x.squeeze()#self.softmaxFinal(x.squeeze())
         return yPred
 
 #Test to see if the code works
